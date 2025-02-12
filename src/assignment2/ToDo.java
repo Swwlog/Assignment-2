@@ -10,7 +10,8 @@ public class ToDo {
 
 	public static void main(String[] args) {
 		JFrame frame = new JFrame();
-		// Hej
+		System.setOut(null);
+		// Hej och hej på dig
 		//knapp för lägga till HomeTask
 		Task task = new HomeTask();
 		frame.add(task.getGuiComponent());
