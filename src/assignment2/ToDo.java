@@ -10,13 +10,9 @@ public class ToDo {
 
 	public static void main(String[] args) {
 		JFrame frame = new JFrame();
-		System.setOut(null);
-		// Hej och hej på dig part 2
-		//knapp för lägga till HomeTask
 		Task task = new HomeTask();
 		frame.add(task.getGuiComponent());
-		
-		
+
 		frame.setBounds(100, 100, 400, 100);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
