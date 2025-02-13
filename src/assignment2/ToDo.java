@@ -3,15 +3,18 @@ package assignment2;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import se.his.it401g.todo.HomeTask;
+import se.his.it401g.todo.StudyTask;
 import se.his.it401g.todo.Task;
-
-public class ToDo extends JFrame implements ActionListener  {
+//import se.his.it401g.todo.TaskListener;
+// implement TaskListener kanske??
+public class ToDo extends JFrame implements ActionListener{
 	JPanel taskPanel = new JPanel();
 
 	public ToDo() {
@@ -40,7 +43,28 @@ public class ToDo extends JFrame implements ActionListener  {
 			repaint();
 			
 		}
-		//System.out.println(event.getActionCommand());
+		if(event.getActionCommand() == "button2") {
+			Task task = new StudyTask();
+			taskPanel.add(task.getGuiComponent());
+			revalidate();
+			repaint();
+			
+		}
+		if(event.getActionCommand() == "button3") {
+			Task task = new HomeTask();
+			taskPanel.add(task.getGuiComponent());
+			revalidate();
+			repaint();
+			
+		}
+		if(event.getActionCommand() == "Remove") {
+		
+			revalidate();
+			repaint();
+			
+		}
+	
+		System.out.println(event.getActionCommand());
 	}
 	
 	public static void main(String[] args) {
@@ -50,5 +74,4 @@ public class ToDo extends JFrame implements ActionListener  {
 		todo.start();
 
 	}
-
-}
+	}
