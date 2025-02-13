@@ -3,25 +3,26 @@ package assignment2;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import se.his.it401g.todo.HomeTask;
 import se.his.it401g.todo.Task;
 
 public class ToDo extends JFrame implements ActionListener  {
+	JPanel taskPanel = new JPanel();
 
 	public ToDo() {
 		super("my todo application");
 		JPanel buttonMenu = new ButtonPanel(this);
-		add(buttonMenu);
-		
-		//Task task = new HomeTask();
-		//buttonMenu.add(task.getGuiComponent(), BorderLayout.CENTER);
+		add(buttonMenu,BorderLayout.NORTH);
+		JScrollPane scroller = new JScrollPane(taskPanel);
+		add(scroller,BorderLayout.CENTER);
+		taskPanel.setLayout(new BoxLayout(taskPanel, BoxLayout.Y_AXIS));
 
-		setBounds(100, 100, 400, 100);
+		setBounds(400, 400, 400, 400);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
@@ -33,10 +34,10 @@ public class ToDo extends JFrame implements ActionListener  {
 	public void actionPerformed(ActionEvent event){
 		event.getActionCommand(); // returns string on buttons
 		if(event.getActionCommand() == "button1") {
-			JPanel panel = new JPanel();
 			Task task = new HomeTask();
-			panel.add(task.getGuiComponent());
-			add(panel);
+			taskPanel.add(task.getGuiComponent());
+			revalidate();
+			repaint();
 			
 		}
 		//System.out.println(event.getActionCommand());
