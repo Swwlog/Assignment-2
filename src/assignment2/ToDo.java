@@ -3,6 +3,9 @@ package assignment2;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -16,6 +19,7 @@ import se.his.it401g.todo.Task;
 // implement TaskListener kanske??
 public class ToDo extends JFrame implements ActionListener{
 	JPanel taskPanel = new JPanel();
+	ArrayList<Task>taskList=new ArrayList<>();
 
 	public ToDo() {
 		super("my todo application");
@@ -30,7 +34,7 @@ public class ToDo extends JFrame implements ActionListener{
 	}
 
 	void start() {
-		setVisible(true);
+		setVisible(true);//vrf kan jag inte commita!!!
 		
 	}
 	
@@ -38,24 +42,41 @@ public class ToDo extends JFrame implements ActionListener{
 		event.getActionCommand(); // returns string on buttons
 		if(event.getActionCommand() == "button1") {
 			Task task = new HomeTask();
-			taskPanel.add(task.getGuiComponent());
+			taskList.add(task); // Daniel nytt: Lägger in i ArreyList först sen in i JPanel(för att kunna sortera)
+			 taskPanel.removeAll();
+			for(int i=0; i<taskList.size();i++) {
+				taskPanel.add(taskList.get(i).getGuiComponent());
+			}
 			revalidate();
 			repaint();
-			
+			System.out.println(taskList.size()); // test ta bort sen
 		}
 		if(event.getActionCommand() == "button2") {
 			Task task = new StudyTask();
-			taskPanel.add(task.getGuiComponent());
+			taskList.add(task);// Daniel nytt: Lägger in i ArreyList först sen in i JPanel(för att kunna sortera)
+			 taskPanel.removeAll();
+			for(int i=0; i<taskList.size();i++) {
+				taskPanel.add(taskList.get(i).getGuiComponent());
+			}
 			revalidate();
 			repaint();
+			System.out.println(taskList.size()); // test ta bort sen
 			
 		}
 		if(event.getActionCommand() == "button3") {
 			Task task = new HomeTask();
-			taskPanel.add(task.getGuiComponent());
+			taskList.add(task);// Daniel nytt: Lägger in i ArreyList först sen in i JPanel(för att kunna sortera)
+			 taskPanel.removeAll();
+			 Collections.sort(taskList, Comparator.comparing(Task::getText));//test för sortering ska vara på annan plats senare
+			// Collections.sort(taskList, Comparator.comparing(Task::isComplete));
+			// Collections.sort(taskList, Comparator.comparing(Task::getTaskType));
+			for(int i=0; i<taskList.size();i++) {
+				taskPanel.add(taskList.get(i).getGuiComponent());
+			}
 			revalidate();
 			repaint();
-			
+			System.out.println(taskList.size());// Test ta bort sen
+			System.out.println(taskList.getFirst().getText()); // test ta bort sen
 		}
 		if(event.getActionCommand() == "Remove") {
 		
@@ -66,6 +87,7 @@ public class ToDo extends JFrame implements ActionListener{
 	
 		System.out.println(event.getActionCommand());
 	}
+	
 	
 	public static void main(String[] args) {
 
