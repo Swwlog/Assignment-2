@@ -28,6 +28,7 @@ public class ToDo extends JFrame implements ActionListener{
 		JScrollPane scroller = new JScrollPane(taskPanel);
 		add(scroller,BorderLayout.CENTER);
 		taskPanel.setLayout(new BoxLayout(taskPanel, BoxLayout.Y_AXIS));
+		
 
 		setBounds(400, 400, 400, 400);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,7 +42,7 @@ public class ToDo extends JFrame implements ActionListener{
 	
 	public void actionPerformed(ActionEvent event){
 		event.getActionCommand(); // returns string on buttons
-		if(event.getActionCommand() == "button1") {
+		if(event.getActionCommand() == "New HomeTask") {
 			Task task = new HomeTask();
 			taskList.add(task); // Daniel nytt: Lägger in i ArreyList först sen in i JPanel(för att kunna sortera)
 			 taskPanel.removeAll();
@@ -52,7 +53,7 @@ public class ToDo extends JFrame implements ActionListener{
 			repaint();
 			System.out.println(taskList.size()); // test ta bort sen
 		}
-		if(event.getActionCommand() == "button2") {
+		if(event.getActionCommand() == "New StudyTask") {
 			Task task = new StudyTask();
 			taskList.add(task);// Daniel nytt: Lägger in i ArreyList först sen in i JPanel(för att kunna sortera)
 			 taskPanel.removeAll();
@@ -64,7 +65,7 @@ public class ToDo extends JFrame implements ActionListener{
 			System.out.println(taskList.size()); // test ta bort sen
 			
 		}
-		if(event.getActionCommand() == "button3") {
+		if(event.getActionCommand() == "New CostomTask") {
 			Task task = new HomeTask();
 			taskList.add(task);// Daniel nytt: Lägger in i ArreyList först sen in i JPanel(för att kunna sortera)
 			 taskPanel.removeAll();
@@ -91,6 +92,7 @@ public class ToDo extends JFrame implements ActionListener{
 		}
 		if (buttonMenu.getSortType()== 1) {
 			Collections.sort(taskList, Comparator.comparing(Task::isComplete));
+			System.out.print(taskList.stream().filter(Task::isComplete).count());// Daniel Prov för räcknare ta bort!
 		}
 		if (buttonMenu.getSortType()== 2) {
 			Collections.sort(taskList, Comparator.comparing(Task::getTaskType));
