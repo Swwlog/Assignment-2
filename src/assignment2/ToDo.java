@@ -15,11 +15,13 @@ import javax.swing.JScrollPane;
 import se.his.it401g.todo.HomeTask;
 import se.his.it401g.todo.StudyTask;
 import se.his.it401g.todo.Task;
+
 import se.his.it401g.todo.TaskListener;
 
-//import se.his.it401g.todo.TaskListener;
 // implement TaskListener kanske??
+
 public class ToDo extends JFrame implements ActionListener, TaskListener {
+
 	JPanel taskPanel = new JPanel();
 	ArrayList<Task> taskList = new ArrayList<>();
 	ButtonPanel buttonMenu;
@@ -50,6 +52,12 @@ public class ToDo extends JFrame implements ActionListener, TaskListener {
 			taskList.add(task); // Daniel nytt: Lägger in i ArreyList först sen in i JPanel(för att kunna
 								// sortera)
 			taskPanel.removeAll();
+
+			taskList.add(task); // Daniel nytt: Lägger in i ArreyList först sen in i JPanel(för att kunna
+								// sortera)
+			taskPanel.removeAll();
+			sortAndUppdateList();
+
 			for (int i = 0; i < taskList.size(); i++) {
 				taskPanel.add(taskList.get(i).getGuiComponent());
 			}
@@ -59,7 +67,9 @@ public class ToDo extends JFrame implements ActionListener, TaskListener {
 		}
 		if (event.getActionCommand() == "New StudyTask") {
 			Task task = new StudyTask();
+
 			task.setTaskListener(this);
+
 			taskList.add(task);// Daniel nytt: Lägger in i ArreyList först sen in i JPanel(för att kunna
 								// sortera)
 			taskPanel.removeAll();
@@ -73,7 +83,9 @@ public class ToDo extends JFrame implements ActionListener, TaskListener {
 		}
 		if (event.getActionCommand() == "New CostomTask") {
 			Task task = new HomeTask();
+
 			task.setTaskListener(this);
+
 			taskList.add(task);// Daniel nytt: Lägger in i ArreyList först sen in i JPanel(för att kunna
 								// sortera)
 			taskPanel.removeAll();
@@ -96,23 +108,25 @@ public class ToDo extends JFrame implements ActionListener, TaskListener {
 
 	// Sorting metod that sort the list in 3 difrent ways and uppdate the new list
 	// to panel
-	public void sortAndUppdateList(){
-		if (buttonMenu.getSortType()== 0) {
+
+	public void sortAndUppdateList() {
+		if (buttonMenu.getSortType() == 0) {
+
 			Collections.sort(taskList, Comparator.comparing(Task::getText));
 		}
-		if (buttonMenu.getSortType()== 1) {
+		if (buttonMenu.getSortType() == 1) {
 			Collections.sort(taskList, Comparator.comparing(Task::isComplete));
 			System.out.print(taskList.stream().filter(Task::isComplete).count());// Daniel Prov för räcknare ta bort!
 		}
-		if (buttonMenu.getSortType()== 2) {
+		if (buttonMenu.getSortType() == 2) {
 			Collections.sort(taskList, Comparator.comparing(Task::getTaskType));
 		}
-		 taskPanel.removeAll();
-		 for(int i=0; i<taskList.size();i++) {
-				taskPanel.add(taskList.get(i).getGuiComponent());
-			}
-			revalidate();
-			repaint();
+		taskPanel.removeAll();
+		for (int i = 0; i < taskList.size(); i++) {
+			taskPanel.add(taskList.get(i).getGuiComponent());
+		}
+		revalidate();
+		repaint();
 	}
 
 	public static void main(String[] args) {
@@ -122,7 +136,7 @@ public class ToDo extends JFrame implements ActionListener, TaskListener {
 		todo.start();
 
 	}
-	
+
 	@Override
 	public void taskRemoved(Task t) {
 		taskList.remove(t);
@@ -132,24 +146,24 @@ public class ToDo extends JFrame implements ActionListener, TaskListener {
 	@Override
 	public void taskChanged(Task t) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void taskCompleted(Task t) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void taskUncompleted(Task t) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void taskCreated(Task t) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
