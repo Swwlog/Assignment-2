@@ -9,6 +9,7 @@ import java.util.Comparator;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -25,6 +26,7 @@ public class ToDo extends JFrame implements ActionListener, TaskListener {
 	JPanel taskPanel = new JPanel();
 	ArrayList<Task> taskList = new ArrayList<>();
 	ButtonPanel buttonMenu;
+	JPanel countCompletedPanel;
 
 	public ToDo() {
 		super("my todo application");
@@ -33,6 +35,13 @@ public class ToDo extends JFrame implements ActionListener, TaskListener {
 		JScrollPane scroller = new JScrollPane(taskPanel);
 		add(scroller, BorderLayout.CENTER);
 		taskPanel.setLayout(new BoxLayout(taskPanel, BoxLayout.Y_AXIS));
+		
+		
+		//Ny panel prov
+		countCompletedPanel = new JPanel ();
+		//JLabel count = new JLabel();
+		//count.add(taskList.stream().filter(Task::isComplete).count(),"of"+ taskList.size());
+		add(countCompletedPanel,BorderLayout.SOUTH);
 
 		setBounds(400, 400, 400, 400);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -49,10 +58,6 @@ public class ToDo extends JFrame implements ActionListener, TaskListener {
 		if (event.getActionCommand() == "New HomeTask") {
 			Task task = new HomeTask();
 			task.setTaskListener(this);
-			taskList.add(task); // Daniel nytt: Lägger in i ArreyList först sen in i JPanel(för att kunna
-								// sortera)
-			taskPanel.removeAll();
-
 			taskList.add(task); // Daniel nytt: Lägger in i ArreyList först sen in i JPanel(för att kunna
 								// sortera)
 			taskPanel.removeAll();
