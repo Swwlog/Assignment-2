@@ -4,9 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -90,21 +87,20 @@ public class ToDo extends JFrame implements ActionListener, TaskListener {
 			System.out.println(taskList.size()); // test ta bort sen
 
 		}
-		if (event.getActionCommand() == "New CostomTask") {
-			Task task = new HomeTask();
-
+		if (event.getActionCommand() == "New WorkTask") {
+			Task task = new WorkTask();
 			task.setTaskListener(this);
 
-			taskList.add(task);// Daniel nytt: Lägger in i ArreyList först sen in i JPanel(för att kunna
-								// sortera)
-			taskPanel.removeAll();
-			for (int i = 0; i < taskList.size(); i++) {
-				taskPanel.add(taskList.get(i).getGuiComponent());
-			}
 
-			JLabel count = new JLabel("" + Counter + " of " + taskList.size() + " complited");
-			countCompletedPanel.removeAll();
-			countCompletedPanel.add(count);
+			lista.addToList(task); // Daniel nytt: Lägger in i ArreyList först sen in i JPanel(för att kunna
+									// sortera)
+			taskPanel.removeAll();
+			sortAndUppdateList();
+
+			for (int i = 0; i < lista.getArraySize(); i++) {
+				taskPanel.add(lista.getTaskElement(i).getGuiComponent());
+			}
+			
 			revalidate();
 			repaint();
 
@@ -145,12 +141,12 @@ public class ToDo extends JFrame implements ActionListener, TaskListener {
 
 	@Override
 	public void taskRemoved(Task t) {
-		taskList.remove(t);
+		lista.removeFromList(t);
 		sortAndUppdateList();
-		Counter = taskList.stream().filter(Task::isComplete).count();
+		/*Counter = taskList.stream().filter(Task::isComplete).count();
 		JLabel count = new JLabel("" + Counter + " of " + taskList.size() + " complited");
 		countCompletedPanel.removeAll();
-		countCompletedPanel.add(count);
+		countCompletedPanel.add(count);*/
 		revalidate();
 		repaint();
 	}
