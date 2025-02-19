@@ -34,9 +34,12 @@ public class TaskList extends JPanel{
 		return taskList.get(index);
 	}
 	
+	public ArrayList getList() {
+		return taskList;
+	}
+	
 	public void sortLists(int sortNumber) {
 		
-		System.out.println(sortNumber + " from new class");
 		
 		if (sortNumber == 0) {
 

@@ -3,7 +3,6 @@ package assignment2;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -19,13 +18,11 @@ import se.his.it401g.todo.TaskListener;
 // implement TaskListener kanske??
 
 public class ToDo extends JFrame implements ActionListener, TaskListener {
-
-	JPanel taskPanel;// = new JPanel();
-	ArrayList<Task> taskList = new ArrayList<>();
-	TaskList lista = new TaskList();
-	ButtonPanel buttonMenu;
-	JPanel countCompletedPanel;
-	long Counter = 0;
+	private JPanel taskPanel;
+	private TaskList lista = new TaskList();
+	private ButtonPanel buttonMenu;
+	private JPanel countCompletedPanel;
+	private int Counter = 0;
 
 	public ToDo() {
 		super("my todo application");
@@ -39,7 +36,7 @@ public class ToDo extends JFrame implements ActionListener, TaskListener {
 
 		// Ny panel för att räkna complited
 		countCompletedPanel = new JPanel();
-		JLabel count = new JLabel("" + Counter + " of " + taskList.size());
+		JLabel count = new JLabel("" + Counter + " of " + lista.getArraySize());
 		countCompletedPanel.add(count);
 		add(countCompletedPanel, BorderLayout.SOUTH);
 
@@ -50,83 +47,95 @@ public class ToDo extends JFrame implements ActionListener, TaskListener {
 
 	void start() {
 		setVisible(true);
-
 	}
 
 	public void actionPerformed(ActionEvent event) {
 		event.getActionCommand(); // returns string on buttons
+		
+		switch(event.getActionCommand()) {
+		
+		case "New HomeTask":
+			Task task = new HomeTask();
+			task.setTaskListener(this);
+			lista.addToList(task); // Daniel nytt: Lägger in i ArreyList först sen in i JPanel(för att kunna
+			updateGUI();
+
+			break;
+			
+		case "New StudyTask":
+			task = new StudyTask();
+			task.setTaskListener(this);
+			lista.addToList(task); // Daniel nytt: Lägger in i ArreyList först sen in i JPanel(för att kunna sortera)
+			updateGUI();
+			
+			break;
+			
+		case "New WorkTask":
+			task = new WorkTask();
+			task.setTaskListener(this);
+			lista.addToList(task); // Daniel nytt: Lägger in i ArreyList först sen in i JPanel(för att kunna sortera)
+			updateGUI();
+
+			break;
+			
+		case "comboBoxChanged":
+			updateGUI();
+			break;
+		
+		}
+		
+		
+		/* Keep in case something breaks
 		if (event.getActionCommand() == "New HomeTask") {
 			Task task = new HomeTask();
 			task.setTaskListener(this);
 			lista.addToList(task); // Daniel nytt: Lägger in i ArreyList först sen in i JPanel(för att kunna
-									// sortera)
-			taskPanel.removeAll();
-			sortAndUppdateList();
 
-			for (int i = 0; i < lista.getArraySize(); i++) {
-				taskPanel.add(lista.getTaskElement(i).getGuiComponent());
-			}
-			revalidate();
-			repaint();
-			System.out.println(taskList.size()); // test ta bort sen
+			updateGUI();
+
 		}
 		if (event.getActionCommand() == "New StudyTask") {
 			Task task = new StudyTask();
 			task.setTaskListener(this);
-
 			lista.addToList(task); // Daniel nytt: Lägger in i ArreyList först sen in i JPanel(för att kunna
 									// sortera)
-			taskPanel.removeAll();
-			sortAndUppdateList();
-
-			for (int i = 0; i < lista.getArraySize(); i++) {
-				taskPanel.add(lista.getTaskElement(i).getGuiComponent());
-			}
-			revalidate();
-			repaint();
-			System.out.println(taskList.size()); // test ta bort sen
-
+			updateGUI();
+			
 		}
+		
 		if (event.getActionCommand() == "New WorkTask") {
 			Task task = new WorkTask();
 			task.setTaskListener(this);
-
-
 			lista.addToList(task); // Daniel nytt: Lägger in i ArreyList först sen in i JPanel(för att kunna
 									// sortera)
-			taskPanel.removeAll();
-			sortAndUppdateList();
-
-			for (int i = 0; i < lista.getArraySize(); i++) {
-				taskPanel.add(lista.getTaskElement(i).getGuiComponent());
-			}
-			
-			revalidate();
-			repaint();
-
-			System.out.println(taskList.size());// Test ta bort sen
+			updateGUI();
 
 		}
+		
 		if (event.getActionCommand() == "comboBoxChanged") { // When the JComboBox chages, this picks it upp and calls
 																// the sort method.
-			sortAndUppdateList();
+			updateGUI();
 
 		}
-
-		System.out.println(event.getActionCommand());
+		*/
+		
 	}
 
 	// Sorting metod that sort the list in 3 difrent ways and uppdate the new list
 	// to panel
-	public void sortAndUppdateList() {
+	public void updateGUI() {
 
 		lista.sortLists(buttonMenu.getSortType());
-
 		taskPanel.removeAll();
 		
 		for (int i = 0; i < lista.getArraySize(); i++) {
 			taskPanel.add(lista.getTaskElement(i).getGuiComponent());
 		}
+		
+		JLabel count = new JLabel("" + Counter + " of " + lista.getArraySize() + " complited");
+		countCompletedPanel.removeAll();
+		countCompletedPanel.add(count);
+		
 		revalidate();
 		repaint();
 	}
@@ -141,14 +150,12 @@ public class ToDo extends JFrame implements ActionListener, TaskListener {
 
 	@Override
 	public void taskRemoved(Task t) {
+		
+		if(t.isComplete()) {
+			Counter--;
+		}
 		lista.removeFromList(t);
-		sortAndUppdateList();
-		/*Counter = taskList.stream().filter(Task::isComplete).count();
-		JLabel count = new JLabel("" + Counter + " of " + taskList.size() + " complited");
-		countCompletedPanel.removeAll();
-		countCompletedPanel.add(count);*/
-		revalidate();
-		repaint();
+		updateGUI();
 	}
 
 	@Override
@@ -160,28 +167,19 @@ public class ToDo extends JFrame implements ActionListener, TaskListener {
 	@Override
 	public void taskCompleted(Task t) {
 		// TODO Auto-generated method stub
-		Counter = taskList.stream().filter(Task::isComplete).count();
-		JLabel count = new JLabel("" + Counter + " of " + taskList.size() + " complited");
-		countCompletedPanel.removeAll();
-		countCompletedPanel.add(count);
-		revalidate();
-		repaint();
+		Counter++;
+		updateGUI();
 	}
 
 	@Override
 	public void taskUncompleted(Task t) {
 		// TODO Auto-generated method stub
-		Counter = taskList.stream().filter(Task::isComplete).count();
-		JLabel count = new JLabel("" + Counter + " of " + taskList.size() + " complited");
-		countCompletedPanel.removeAll();
-		countCompletedPanel.add(count);
-		revalidate();
-		repaint();
+		Counter--;
+		updateGUI();
 	}
 
 	@Override
 	public void taskCreated(Task t) {
 		// TODO Auto-generated method stub
-
 	}
 }
