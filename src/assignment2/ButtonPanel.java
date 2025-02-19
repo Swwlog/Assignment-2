@@ -16,7 +16,7 @@ public class ButtonPanel extends JPanel {
 		JButton button2 = new JButton("New StudyTask");
 		button2.addActionListener(listener);
 		add(button2);
-		JButton button3 = new JButton("New CostomTask"); //daniel ändra namn sen 
+		JButton button3 = new JButton("New WorkTask"); //daniel ändra namn sen 
 		button3.addActionListener(listener);
 		add(button3);
 		
