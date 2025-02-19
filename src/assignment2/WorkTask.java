@@ -2,14 +2,18 @@ package assignment2;
 
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.util.Calendar;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerDateModel;
 import javax.swing.border.TitledBorder;
 
 import se.his.it401g.todo.Task;
@@ -25,7 +29,11 @@ import se.his.it401g.todo.TaskListener;
  *
  */
 public class WorkTask extends JPanel implements Task {
+	
+	// test end date text file
+	private JSpinner dueDate;
 
+	private JLabel textLabelDueDate;
 	/**
 	 * The editable text field. 
 	 */
@@ -55,15 +63,31 @@ public class WorkTask extends JPanel implements Task {
 		this.textLabel = new JLabel();
 		this.textLabel.setVisible(false);
 		JPanel center = new JPanel();
+		  Calendar calendar = Calendar.getInstance();
+	        calendar.set(Calendar.HOUR_OF_DAY, 0);
+	        calendar.set(Calendar.MINUTE, 0);
+	        calendar.set(Calendar.SECOND, 0);
+	        calendar.set(Calendar.MILLISECOND, 0);
+	    
+	        this.dueDate = new JSpinner(new SpinnerDateModel(calendar.getTime(),null,null,Calendar.DAY_OF_MONTH ));//test
+	        JSpinner.DateEditor editor = new JSpinner.DateEditor(dueDate, "dd/MM/yy");
+	        dueDate.setEditor(editor);
+	        this.textLabelDueDate = new JLabel("Due Date:");
+	   
+	        
 		center.add(text);
 		center.add(textLabel);
+		center.add(textLabelDueDate);// test
+		center.add(dueDate);// test dueDAte
 		add(center);
 		
 		TaskInputListener inputListener = new TaskInputListener(this, text, textLabel);
 		this.text.addKeyListener(inputListener);
 		this.textLabel.addMouseListener(inputListener);
 		
+	
 		JButton remove = new JButton("Remove");
+	
 		add(remove,BorderLayout.EAST);
 		remove.addActionListener(inputListener);
 		
