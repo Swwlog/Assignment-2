@@ -11,48 +11,57 @@ import javax.swing.JScrollPane;
 
 import se.his.it401g.todo.Task;
 
-public class TaskList extends JPanel{
+public class TaskList extends JPanel {
 	ArrayList<Task> taskList;
-	
+
 	public TaskList() {
 		taskList = new ArrayList<>();
 	}
-	
+
 	public void addToList(Task t) {
 		taskList.add(t);
 	}
-	
+
 	public void removeFromList(Task t) {
 		taskList.remove(t);
 	}
-	
+
 	public int getArraySize() {
 		return taskList.size();
 	}
-	
+
 	public Task getTaskElement(int index) {
 		return taskList.get(index);
 	}
-	
+
 	public ArrayList getList() {
 		return taskList;
 	}
-	
+
 	public void sortLists(int sortNumber) {
 		// create new compariator class
 		
 		if (sortNumber == 0) {
+			Comparator comparator = new MyComparatorName();
+			Collections.sort(taskList,comparator);
 
-			Collections.sort(taskList, Comparator.comparing(Task::getText));
+			//Collections.sort(taskList, Comparator.comparing(Task::getText));
 		}
 		if (sortNumber == 1) {
-			Collections.sort(taskList, Comparator.comparing(Task::isComplete));
+			Comparator comparator = new MyComparatorIsComplete();
+			Collections.sort(taskList,comparator);
+		
+		
+			//Collections.sort(taskList, Comparator.comparing(Task::isComplete));
 		}
-		if (sortNumber == 2) {
-			Collections.sort(taskList, Comparator.comparing(Task::getTaskType));
-		}
-				
-		}
+		if(sortNumber==2)
 
+	{
+		Comparator comparator = new MyComparatorTaskType();
+		Collections.sort(taskList, comparator);
+		// Collections.sort(taskList, Comparator.comparing(Task::getTaskType));
 	}
 
+}
+
+}
