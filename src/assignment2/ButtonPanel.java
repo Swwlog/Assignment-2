@@ -4,10 +4,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class ButtonPanel extends JPanel {
-	JComboBox sort;
+	private JComboBox<?> sortMenu;
 
 	public ButtonPanel(ActionListener listener) {
 		JButton button1 = new JButton("New HomeTask");
@@ -16,21 +17,22 @@ public class ButtonPanel extends JPanel {
 		JButton button2 = new JButton("New StudyTask");
 		button2.addActionListener(listener);
 		add(button2);
-		JButton button3 = new JButton("New WorkTask"); //daniel ändra namn sen 
+		JButton button3 = new JButton("New WorkTask");  
 		button3.addActionListener(listener);
 		add(button3);
 		
-		//sort button prov daniel
 	
 		String [] options = {"  Name  ","  Completion  ","  Task type  "};
-		sort = new JComboBox(options);
-		sort.addActionListener(listener);
-		add(sort);
+		sortMenu = new JComboBox(options);
+		sortMenu.addActionListener(listener);
+		JLabel sortBy = new JLabel("Sort by:");
+		add(sortBy);
+		add(sortMenu);
 		
 	}
 	
 	public int getSortType() {
-		int value = (sort.getSelectedIndex());
+		int value = (sortMenu.getSelectedIndex());
 		return value;
 	}
 	

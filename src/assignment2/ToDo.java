@@ -19,10 +19,10 @@ import se.his.it401g.todo.TaskListener;
 
 public class ToDo extends JFrame implements ActionListener, TaskListener {
 	private JPanel taskPanel;
-	private TaskList lista = new TaskList();
+	private TaskList taskList = new TaskList();
 	private ButtonPanel buttonMenu;
 	private JPanel countCompletedPanel;
-	private int Counter = 0;
+	private int counter = 0;
 
 	public ToDo() {
 		super("my todo application");
@@ -33,14 +33,14 @@ public class ToDo extends JFrame implements ActionListener, TaskListener {
 		JScrollPane scroller = new JScrollPane(taskPanel);
 		add(scroller, BorderLayout.CENTER);
 		taskPanel.setLayout(new BoxLayout(taskPanel, BoxLayout.Y_AXIS));
-
-		// Ny panel för att räkna complited
+		
+		
 		countCompletedPanel = new JPanel();
-		JLabel count = new JLabel("" + Counter + " of " + lista.getArraySize());
+		JLabel count = new JLabel("" + counter + " of " + taskList.getArraySize());
 		countCompletedPanel.add(count);
 		add(countCompletedPanel, BorderLayout.SOUTH);
 
-		setBounds(400, 400, 400, 400);
+		setBounds(400, 400, 600, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
@@ -51,91 +51,85 @@ public class ToDo extends JFrame implements ActionListener, TaskListener {
 
 	public void actionPerformed(ActionEvent event) {
 		event.getActionCommand(); // returns string on buttons
-		
-		switch(event.getActionCommand()) {
-		
+
+		switch (event.getActionCommand()) {
+
 		case "New HomeTask":
 			Task task = new HomeTask();
 			task.setTaskListener(this);
-			lista.addToList(task); // Daniel nytt: Lägger in i ArreyList först sen in i JPanel(för att kunna
+			taskList.addToList(task);
 			updateGUI();
 
 			break;
-			
+
 		case "New StudyTask":
 			task = new StudyTask();
 			task.setTaskListener(this);
-			lista.addToList(task); // Daniel nytt: Lägger in i ArreyList först sen in i JPanel(för att kunna sortera)
+			taskList.addToList(task);
+									
 			updateGUI();
-			
+
 			break;
-			
+
 		case "New WorkTask":
 			task = new WorkTask();
 			task.setTaskListener(this);
-			lista.addToList(task); // Daniel nytt: Lägger in i ArreyList först sen in i JPanel(för att kunna sortera)
+			taskList.addToList(task); 
+									
 			updateGUI();
 
 			break;
-			
+
 		case "comboBoxChanged":
 			updateGUI();
 			break;
-		
-		}
-		
-		
-		/* Keep in case something breaks
-		if (event.getActionCommand() == "New HomeTask") {
-			Task task = new HomeTask();
-			task.setTaskListener(this);
-			lista.addToList(task); // Daniel nytt: Lägger in i ArreyList först sen in i JPanel(för att kunna
-
-			updateGUI();
 
 		}
-		if (event.getActionCommand() == "New StudyTask") {
-			Task task = new StudyTask();
-			task.setTaskListener(this);
-			lista.addToList(task); // Daniel nytt: Lägger in i ArreyList först sen in i JPanel(för att kunna
-									// sortera)
-			updateGUI();
-			
-		}
-		
-		if (event.getActionCommand() == "New WorkTask") {
-			Task task = new WorkTask();
-			task.setTaskListener(this);
-			lista.addToList(task); // Daniel nytt: Lägger in i ArreyList först sen in i JPanel(för att kunna
-									// sortera)
-			updateGUI();
 
-		}
-		
-		if (event.getActionCommand() == "comboBoxChanged") { // When the JComboBox chages, this picks it upp and calls
-																// the sort method.
-			updateGUI();
+		/*
+		 * Keep in case something breaks if (event.getActionCommand() == "New HomeTask")
+		 * { Task task = new HomeTask(); task.setTaskListener(this);
+		 * lista.addToList(task); // Daniel nytt: Lägger in i ArreyList först sen in i
+		 * JPanel(för att kunna
+		 * 
+		 * updateGUI();
+		 * 
+		 * } if (event.getActionCommand() == "New StudyTask") { Task task = new
+		 * StudyTask(); task.setTaskListener(this); lista.addToList(task); // Daniel
+		 * nytt: Lägger in i ArreyList först sen in i JPanel(för att kunna // sortera)
+		 * updateGUI();
+		 * 
+		 * }
+		 * 
+		 * if (event.getActionCommand() == "New WorkTask") { Task task = new WorkTask();
+		 * task.setTaskListener(this); lista.addToList(task); // Daniel nytt: Lägger in
+		 * i ArreyList först sen in i JPanel(för att kunna // sortera) updateGUI();
+		 * 
+		 * }
+		 * 
+		 * if (event.getActionCommand() == "comboBoxChanged") { // When the JComboBox
+		 * chages, this picks it upp and calls // the sort method. updateGUI();
+		 * 
+		 * }
+		 */
 
-		}
-		*/
-		
 	}
 
 	// Sorting metod that sort the list in 3 difrent ways and uppdate the new list
 	// to panel
 	public void updateGUI() {
 
-		lista.sortLists(buttonMenu.getSortType());
+		taskList.sortLists(buttonMenu.getSortType());
 		taskPanel.removeAll();
-		
-		for (int i = 0; i < lista.getArraySize(); i++) {
-			taskPanel.add(lista.getTaskElement(i).getGuiComponent());
+
+		for (int i = 0; i < taskList.getArraySize(); i++) {
+			taskPanel.add(taskList.getTaskElement(i).getGuiComponent());
 		}
-		
-		JLabel count = new JLabel("" + Counter + " of " + lista.getArraySize() + " complited");
+
+		JLabel count = new JLabel("" + counter + " of " + taskList.getArraySize() + " complited");
 		countCompletedPanel.removeAll();
 		countCompletedPanel.add(count);
-		
+
 		revalidate();
 		repaint();
 	}
@@ -150,11 +144,11 @@ public class ToDo extends JFrame implements ActionListener, TaskListener {
 
 	@Override
 	public void taskRemoved(Task t) {
-		
-		if(t.isComplete()) {
-			Counter--;
+
+		if (t.isComplete()) {
+			counter--;
 		}
-		lista.removeFromList(t);
+		taskList.removeFromList(t);
 		updateGUI();
 	}
 
@@ -167,14 +161,14 @@ public class ToDo extends JFrame implements ActionListener, TaskListener {
 	@Override
 	public void taskCompleted(Task t) {
 		// TODO Auto-generated method stub
-		Counter++;
+		counter++;
 		updateGUI();
 	}
 
 	@Override
 	public void taskUncompleted(Task t) {
 		// TODO Auto-generated method stub
-		Counter--;
+		counter--;
 		updateGUI();
 	}
 

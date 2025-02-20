@@ -30,7 +30,7 @@ import se.his.it401g.todo.TaskListener;
  */
 public class WorkTask extends JPanel implements Task {
 	
-	// test end date text file
+	
 	private JSpinner dueDate;
 
 	private JLabel textLabelDueDate;
@@ -63,11 +63,8 @@ public class WorkTask extends JPanel implements Task {
 		this.textLabel = new JLabel();
 		this.textLabel.setVisible(false);
 		JPanel center = new JPanel();
+		
 		  Calendar calendar = Calendar.getInstance();
-	        calendar.set(Calendar.HOUR_OF_DAY, 0);
-	        calendar.set(Calendar.MINUTE, 0);
-	        calendar.set(Calendar.SECOND, 0);
-	        calendar.set(Calendar.MILLISECOND, 0);
 	    
 	        this.dueDate = new JSpinner(new SpinnerDateModel(calendar.getTime(),null,null,Calendar.DAY_OF_MONTH ));//test
 	        JSpinner.DateEditor editor = new JSpinner.DateEditor(dueDate, "dd/MM/yy");
