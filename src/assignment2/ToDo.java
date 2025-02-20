@@ -36,7 +36,7 @@ public class ToDo extends JFrame implements ActionListener, TaskListener {
 		JLabel count = new JLabel("" + counter + " of " + taskList.getArraySize());
 		countCompletedPanel.add(count);
 		add(countCompletedPanel, BorderLayout.SOUTH);
-// add fixed screen		
+		setResizable(false);
 
 		setBounds(400, 400, 600, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
