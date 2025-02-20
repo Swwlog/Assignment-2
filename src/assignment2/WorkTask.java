@@ -1,6 +1,5 @@
 package assignment2;
 
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -22,76 +21,76 @@ import se.his.it401g.todo.TaskListener;
 
 /**
  * Implements a simple home task type, following the Task.java interface class.
- *  
- * This file licensed under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons (CC) BY 4.0 license</a>.
+ * 
+ * This file licensed under the
+ * <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons (CC)
+ * BY 4.0 license</a>.
  * 
  * @author Dr. Erik Billing, University of Skovde
  *
  */
 public class WorkTask extends JPanel implements Task {
-	
-	
+
 	private JSpinner dueDate;
 
 	private JLabel textLabelDueDate;
 	/**
-	 * The editable text field. 
+	 * The editable text field.
 	 */
 	private JTextField text;
-	
+
 	/**
 	 * The non editable text label.
 	 */
 	private JLabel textLabel;
-	
+
 	/**
-	 * Check box holding the completion status. 
+	 * Check box holding the completion status.
 	 */
 	JCheckBox completed = new JCheckBox();
-	
+
 	/**
-	 * The task listener used for reporting changes to the main application. 
+	 * The task listener used for reporting changes to the main application.
 	 */
 	private TaskListener listener;
-	
+
 	/**
-	 * This is the constructor for the task, initiating the GUI component for the task. Several listeners are used to react to various events in the GUI.  
+	 * This is the constructor for the task, initiating the GUI component for the
+	 * task. Several listeners are used to react to various events in the GUI.
 	 */
 	public WorkTask() {
 		super(new BorderLayout());
-		this.text = new JTextField("New task",20);
+		this.text = new JTextField("New task", 20);
 		this.textLabel = new JLabel();
 		this.textLabel.setVisible(false);
 		JPanel center = new JPanel();
-		
-		  Calendar calendar = Calendar.getInstance();
-	    
-	        this.dueDate = new JSpinner(new SpinnerDateModel(calendar.getTime(),null,null,Calendar.DAY_OF_MONTH ));//test
-	        JSpinner.DateEditor editor = new JSpinner.DateEditor(dueDate, "dd/MM/yy");
-	        dueDate.setEditor(editor);
-	        this.textLabelDueDate = new JLabel("Due Date:");
-	   
-	        
+
+		Calendar calendar = Calendar.getInstance();
+
+		this.dueDate = new JSpinner(new SpinnerDateModel(calendar.getTime(), null, null, Calendar.DAY_OF_MONTH));// test
+		JSpinner.DateEditor editor = new JSpinner.DateEditor(dueDate, "dd/MM/yy");
+		dueDate.setEditor(editor);
+		this.textLabelDueDate = new JLabel("Due Date:");
+
 		center.add(text);
 		center.add(textLabel);
 		center.add(textLabelDueDate);// test
 		center.add(dueDate);// test dueDAte
 		add(center);
-		
+
 		TaskInputListener inputListener = new TaskInputListener(this, text, textLabel);
 		this.text.addKeyListener(inputListener);
 		this.textLabel.addMouseListener(inputListener);
-		
-	
+
 		JButton remove = new JButton("Remove");
-	
-		add(remove,BorderLayout.EAST);
+
+		add(remove, BorderLayout.EAST);
 		remove.addActionListener(inputListener);
-		
-		add(completed,BorderLayout.WEST);
+
+		add(completed, BorderLayout.WEST);
 		completed.addItemListener(inputListener);
-		
-		setMaximumSize(new Dimension(1000,50));
+
+		setMaximumSize(new Dimension(1000, 50));
 		setBorder(new TitledBorder(getTaskType()));
 	}
 
@@ -107,7 +106,7 @@ public class WorkTask extends JPanel implements Task {
 
 	@Override
 	public void setTaskListener(TaskListener t) {
-		listener = t;		
+		listener = t;
 	}
 
 	@Override
@@ -122,7 +121,8 @@ public class WorkTask extends JPanel implements Task {
 
 	@Override
 	public Component getGuiComponent() {
-		// Since this class extends JPanel, it is itself a GUI component, and thus we can return "this". 
+		// Since this class extends JPanel, it is itself a GUI component, and thus we
+		// can return "this".
 		return this;
 	}
 

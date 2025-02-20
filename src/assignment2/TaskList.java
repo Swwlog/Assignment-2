@@ -39,7 +39,7 @@ public class TaskList extends JPanel{
 	}
 	
 	public void sortLists(int sortNumber) {
-		
+		// create new compariator class
 		
 		if (sortNumber == 0) {
 

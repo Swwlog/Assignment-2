@@ -15,7 +15,6 @@ import se.his.it401g.todo.Task;
 
 import se.his.it401g.todo.TaskListener;
 
-
 public class ToDo extends JFrame implements ActionListener, TaskListener {
 	private JPanel taskPanel;
 	private TaskList taskList = new TaskList();
@@ -32,12 +31,12 @@ public class ToDo extends JFrame implements ActionListener, TaskListener {
 		JScrollPane scroller = new JScrollPane(taskPanel);
 		add(scroller, BorderLayout.CENTER);
 		taskPanel.setLayout(new BoxLayout(taskPanel, BoxLayout.Y_AXIS));
-		
-		
+
 		countCompletedPanel = new JPanel();
 		JLabel count = new JLabel("" + counter + " of " + taskList.getArraySize());
 		countCompletedPanel.add(count);
 		add(countCompletedPanel, BorderLayout.SOUTH);
+// add fixed screen		
 
 		setBounds(400, 400, 600, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -64,7 +63,7 @@ public class ToDo extends JFrame implements ActionListener, TaskListener {
 			task = new StudyTask();
 			task.setTaskListener(this);
 			taskList.addToList(task);
-									
+
 			updateGUI();
 
 			break;
@@ -72,8 +71,8 @@ public class ToDo extends JFrame implements ActionListener, TaskListener {
 		case "New WorkTask":
 			task = new WorkTask();
 			task.setTaskListener(this);
-			taskList.addToList(task); 
-									
+			taskList.addToList(task);
+
 			updateGUI();
 
 			break;
@@ -84,11 +83,8 @@ public class ToDo extends JFrame implements ActionListener, TaskListener {
 
 		}
 
-		
-
 	}
 
-	
 	public void updateGUI() {
 
 		taskList.sortLists(buttonMenu.getSortType());
@@ -105,7 +101,6 @@ public class ToDo extends JFrame implements ActionListener, TaskListener {
 		revalidate();
 		repaint();
 	}
-
 
 	@Override
 	public void taskRemoved(Task t) {
@@ -125,14 +120,12 @@ public class ToDo extends JFrame implements ActionListener, TaskListener {
 
 	@Override
 	public void taskCompleted(Task t) {
-		// TODO Auto-generated method stub
 		counter++;
 		updateGUI();
 	}
 
 	@Override
 	public void taskUncompleted(Task t) {
-		// TODO Auto-generated method stub
 		counter--;
 		updateGUI();
 	}
@@ -141,12 +134,12 @@ public class ToDo extends JFrame implements ActionListener, TaskListener {
 	public void taskCreated(Task t) {
 		// TODO Auto-generated method stub
 	}
-	
+
 	public static void main(String[] args) {
-		
+
 		ToDo todo = new ToDo();
-		
+
 		todo.start();
-		
+
 	}
 }
