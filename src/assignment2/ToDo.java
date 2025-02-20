@@ -15,7 +15,6 @@ import se.his.it401g.todo.Task;
 
 import se.his.it401g.todo.TaskListener;
 
-// implement TaskListener kanske??
 
 public class ToDo extends JFrame implements ActionListener, TaskListener {
 	private JPanel taskPanel;
@@ -50,7 +49,6 @@ public class ToDo extends JFrame implements ActionListener, TaskListener {
 	}
 
 	public void actionPerformed(ActionEvent event) {
-		event.getActionCommand(); // returns string on buttons
 
 		switch (event.getActionCommand()) {
 
@@ -86,37 +84,11 @@ public class ToDo extends JFrame implements ActionListener, TaskListener {
 
 		}
 
-		/*
-		 * Keep in case something breaks if (event.getActionCommand() == "New HomeTask")
-		 * { Task task = new HomeTask(); task.setTaskListener(this);
-		 * lista.addToList(task); // Daniel nytt: Lägger in i ArreyList först sen in i
-		 * JPanel(för att kunna
-		 * 
-		 * updateGUI();
-		 * 
-		 * } if (event.getActionCommand() == "New StudyTask") { Task task = new
-		 * StudyTask(); task.setTaskListener(this); lista.addToList(task); // Daniel
-		 * nytt: Lägger in i ArreyList först sen in i JPanel(för att kunna // sortera)
-		 * updateGUI();
-		 * 
-		 * }
-		 * 
-		 * if (event.getActionCommand() == "New WorkTask") { Task task = new WorkTask();
-		 * task.setTaskListener(this); lista.addToList(task); // Daniel nytt: Lägger in
-		 * i ArreyList först sen in i JPanel(för att kunna // sortera) updateGUI();
-		 * 
-		 * }
-		 * 
-		 * if (event.getActionCommand() == "comboBoxChanged") { // When the JComboBox
-		 * chages, this picks it upp and calls // the sort method. updateGUI();
-		 * 
-		 * }
-		 */
+		
 
 	}
 
-	// Sorting metod that sort the list in 3 difrent ways and uppdate the new list
-	// to panel
+	
 	public void updateGUI() {
 
 		taskList.sortLists(buttonMenu.getSortType());
@@ -134,13 +106,6 @@ public class ToDo extends JFrame implements ActionListener, TaskListener {
 		repaint();
 	}
 
-	public static void main(String[] args) {
-
-		ToDo todo = new ToDo();
-
-		todo.start();
-
-	}
 
 	@Override
 	public void taskRemoved(Task t) {
@@ -175,5 +140,13 @@ public class ToDo extends JFrame implements ActionListener, TaskListener {
 	@Override
 	public void taskCreated(Task t) {
 		// TODO Auto-generated method stub
+	}
+	
+	public static void main(String[] args) {
+		
+		ToDo todo = new ToDo();
+		
+		todo.start();
+		
 	}
 }
