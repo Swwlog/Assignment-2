@@ -1,14 +1,10 @@
 package assignment2;
 
-import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import javax.swing.BoxLayout;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-
 import se.his.it401g.todo.Task;
 
 public class TaskList extends JPanel {
@@ -39,29 +35,22 @@ public class TaskList extends JPanel {
 	}
 
 	public void sortLists(int sortNumber) {
-		// create new compariator class
-		
+
 		if (sortNumber == 0) {
 			Comparator comparator = new MyComparatorName();
-			Collections.sort(taskList,comparator);
+			Collections.sort(taskList, comparator);
 
-			//Collections.sort(taskList, Comparator.comparing(Task::getText));
 		}
 		if (sortNumber == 1) {
 			Comparator comparator = new MyComparatorIsComplete();
-			Collections.sort(taskList,comparator);
-		
-		
-			//Collections.sort(taskList, Comparator.comparing(Task::isComplete));
+			Collections.sort(taskList, comparator);
+
 		}
-		if(sortNumber==2)
+		if (sortNumber == 2) {
+			Comparator comparator = new MyComparatorTaskType();
+			Collections.sort(taskList, comparator);
+		}
 
-	{
-		Comparator comparator = new MyComparatorTaskType();
-		Collections.sort(taskList, comparator);
-		// Collections.sort(taskList, Comparator.comparing(Task::getTaskType));
 	}
-
-}
 
 }

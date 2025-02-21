@@ -67,15 +67,15 @@ public class WorkTask extends JPanel implements Task {
 
 		Calendar calendar = Calendar.getInstance();
 
-		this.dueDate = new JSpinner(new SpinnerDateModel(calendar.getTime(), null, null, Calendar.DAY_OF_MONTH));// test
+		this.dueDate = new JSpinner(new SpinnerDateModel(calendar.getTime(), null, null, Calendar.DAY_OF_MONTH));
 		JSpinner.DateEditor editor = new JSpinner.DateEditor(dueDate, "dd/MM/yy");
 		dueDate.setEditor(editor);
-		this.textLabelDueDate = new JLabel("Due Date:");
+		this.textLabelDueDate = new JLabel(" | Due Date:");
 
 		center.add(text);
 		center.add(textLabel);
-		center.add(textLabelDueDate);// test
-		center.add(dueDate);// test dueDAte
+		center.add(textLabelDueDate);
+		center.add(dueDate);
 		add(center);
 
 		TaskInputListener inputListener = new TaskInputListener(this, text, textLabel);

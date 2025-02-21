@@ -17,23 +17,22 @@ public class ButtonPanel extends JPanel {
 		JButton button2 = new JButton("New StudyTask");
 		button2.addActionListener(listener);
 		add(button2);
-		JButton button3 = new JButton("New WorkTask");  
+		JButton button3 = new JButton("New WorkTask");
 		button3.addActionListener(listener);
 		add(button3);
-		
-	
-		String [] options = {"  Name  ","  Completion  ","  Task type  "};
+
+		String[] options = { "  Name  ", "  Completion  ", "  Task type  " };
 		sortMenu = new JComboBox(options);
 		sortMenu.addActionListener(listener);
 		JLabel sortBy = new JLabel("Sort by:");
 		add(sortBy);
 		add(sortMenu);
-		
+
 	}
-	
+
 	public int getSortType() {
 		int value = (sortMenu.getSelectedIndex());
 		return value;
 	}
-	
+
 }
